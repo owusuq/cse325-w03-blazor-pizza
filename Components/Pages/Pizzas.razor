@@ -1,0 +1,29 @@
+@page "/pizzas"
+@using System.Globalization
+@using PizzaApp.Models
+@using PizzaApp.Services
+@inject PizzaService PizzaService
+
+<PageTitle>Pizzas</PageTitle>
+
+<h1>Our Pizzas</h1>
+
+<div class="pizza-list">
+    @foreach (var pizza in pizzas)
+    {
+        <div class="pizza-card">
+            <h3>@pizza.Name</h3>
+            <p>@pizza.Description</p>
+            <p><strong>@pizza.Price.ToString("C", CultureInfo.GetCultureInfo("en-GH"))</strong></p>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Pizza> pizzas = new();
+
+    protected override void OnInitialized()
+    {
+        pizzas = PizzaService.GetPizzas();
+    }
+}
